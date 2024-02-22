@@ -1,0 +1,101 @@
+<mvc:View controllerName="sap.com.timesheet.controller.Timesheet"
+    xmlns:mvc="sap.ui.core.mvc"
+    	xmlns:core="sap.ui.core" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+        <content>
+     	<Panel width="auto" class="sapUiResponsiveMargin" accessibleRole="Region">
+        <headerToolbar>
+			<OverflowToolbar>
+				<Title text="Time Sheet"/>
+                
+			</OverflowToolbar>
+		</headerToolbar>
+        	<DateRangeSelection
+			id="DRS1"
+			class="DRS1"
+			value= "{
+				'type': 'sap.ui.model.type.DateInterval',
+				'formatOptions': {
+					'pattern': 'yyyy/MM/dd'
+				},
+				'parts': [
+					{
+						'type': 'sap.ui.model.type.Date',
+						'path': '/start'
+					},
+					{
+						'type': 'sap.ui.model.type.Date',
+						'path': '/end'
+					}
+				]
+			}"
+			change="handleChange"/>
+            <Button text="Add" press="onAdd"/>
+            <Button text="Delete" press="onDelete"/>
+            
+            
+            <Table items="{oTimeSheetJSONModel>/Records}">
+            <columns>
+            <Column >
+            <Text text="Project Name"/>
+            </Column>
+            <Column >
+            <Text text="Day1"/>
+            </Column>
+            <Column >
+            <Text text="Day2"/>
+            </Column>
+            <Column >
+            <Text text="Day3"/>
+            </Column>
+            <Column >
+            <Text text="Day4"/>
+            </Column>
+            <Column >
+            <Text text="Day5"/>
+            </Column>
+            <Column >
+            <Text text="Day6"/>
+            </Column>
+            <Column >
+            <Text text="Day7"/>
+            </Column>
+            
+            </columns>
+            <items>
+            <ColumnListItem vAlign="Middle" type="Navigation" press="onRowPress">
+            <cells>
+            <ComboBox
+				items="{
+					path: 'oTimeSheetJSONModel>/ProjectName',
+					sorter: { path: 'text' }
+				}">
+				<core:Item key="{oTimeSheetJSONModel>ProjectName}" text="{oTimeSheetJSONModel>ProjectName}" />
+			</ComboBox>
+            <Input value="{path:'oTimeSheetJSONModel>Day1',type:'sap.ui.model.type.Float'}" liveChange="onInputChange" id="Numeric1"/>
+            <Input value="{path:'oTimeSheetJSONModel>Day2',type:'sap.ui.model.type.Float'}" liveChange="onInputChange" id="Numeric2"/>
+            <Input value="{path:'oTimeSheetJSONModel>Day3',type:'sap.ui.model.type.Float'}" liveChange="onInputChange" id="Numeric3"/>
+            <Input value="{path:'oTimeSheetJSONModel>Day4',type:'sap.ui.model.type.Float'}" liveChange="onInputChange" id="Numeric4"/>
+            <Input value="{path:'oTimeSheetJSONModel>Day5',type:'sap.ui.model.type.Float'}" liveChange="onInputChange" id="Numeric5"/>
+            <Input value="{path:'oTimeSheetJSONModel>Day6',type:'sap.ui.model.type.Float'}" liveChange="onInputChange" id="Numeric6" editable="false"/>
+            <Input value="{path:'oTimeSheetJSONModel>Day7', type:'sap.ui.model.type.Float'}" liveChange="onInputChange" id="Numeric7" editable="false"/>
+            
+            </cells>
+            </ColumnListItem >
+            </items>
+			
+
+            </Table>
+        </Panel>   
+        </content>
+        <footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+                <Button text="GrandTotal" press="onCalculateData"/>
+				<Text id="Grandtotalid" text=""/>
+                <Button text="Submit for approval"/>    
+			</OverflowToolbar>
+		</footer>
+    </Page>
+</mvc:View>
